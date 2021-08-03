@@ -34,7 +34,9 @@ fun AuthPreview() {
         LoginCard(
             uiState = AuthState.Success,
             onSubmit = { _, _ -> },
-            toSignUp = {}
+            toSignUp = {},
+            onDone = {},
+            toHome = {}
         )
     }
 }
