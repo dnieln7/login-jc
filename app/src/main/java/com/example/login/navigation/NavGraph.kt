@@ -8,11 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.login.ViewModelContainer
-import com.example.login.ui.auth.AuthScreen
-import com.example.login.ui.auth.AuthState
-import com.example.login.ui.auth.LoginCard
-import com.example.login.ui.auth.SignUpCard
+import com.example.login.ui.ViewModelContainer
+import com.example.login.ui.auth.*
 
 @Composable
 fun NavGraph(
@@ -30,7 +27,7 @@ fun NavGraph(
         modifier = modifier
     ) {
         composable(Destinations.Login.name) {
-            AuthScreen(route = Destinations.Login) {
+            AuthBody(route = Destinations.Login) {
 
                 LoginCard(
                     uiState = loginState,
@@ -46,7 +43,7 @@ fun NavGraph(
             }
         }
         composable(Destinations.SignUp.name) {
-            AuthScreen(route = Destinations.SignUp) {
+            AuthBody(route = Destinations.SignUp) {
                 SignUpCard(
                     uiState = signUpState,
                     onSubmit = { container.signUpViewModel.signup(it) },

@@ -1,4 +1,4 @@
-package com.example.login
+package com.example.login.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,9 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -19,10 +17,7 @@ import com.example.login.navigation.NavGraph
 import com.example.login.ui.auth.LoginViewModel
 import com.example.login.ui.auth.SignUpViewModel
 import com.example.login.ui.theme.LoginTheme
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import com.example.login.data.preferences.PreferencesUtils.createDataStore
-import com.example.login.ui.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
     private lateinit var loginViewModel: LoginViewModel
@@ -45,37 +40,15 @@ class MainActivity : ComponentActivity() {
             loginViewModel = loginViewModel,
             signUpViewModel = signUpViewModel,
         )
+
         setContent {
             LoginTheme {
-                LoginApp(viewModelContainer = viewModelContainer, preferencesManager = preferencesManager)
+                LoadApp(
+                    viewModelContainer = viewModelContainer,
+                    preferencesManager = preferencesManager,
+                )
             }
         }
-    }
-}
-
-@Composable
-fun LoginApp(viewModelContainer: ViewModelContainer, preferencesManager: PreferencesManager) {
-    val userState by preferencesManager.user.collectAsState(initial = null)
-
-    if(userState != null) {
-        HomeScreen(preferencesManager = preferencesManager)
-    }else {
-        AuthScreen(viewModelContainer = viewModelContainer)
-    }
-}
-
-@Composable
-fun AuthScreen(viewModelContainer: ViewModelContainer) {
-    val navController = rememberNavController()
-    val backstackEntry = navController.currentBackStackEntryAsState()
-    val currentScreen = Destinations.getRouteName(backstackEntry.value?.destination?.route)
-
-    Scaffold {
-        NavGraph(
-            modifier = Modifier.padding(it),
-            navHostController = navController,
-            container = viewModelContainer,
-        )
     }
 }
 
@@ -83,3 +56,19 @@ data class ViewModelContainer(
     val loginViewModel: LoginViewModel,
     val signUpViewModel: SignUpViewModel
 )
+
+@Composable
+fun LoadApp(viewModelContainer: ViewModelContainer, preferencesManager: PreferencesManager) {
+    Surface(color = MaterialTheme.colors.primary) {
+        var showLandingScreen by remember { mutableStateOf(true) }
+
+        if (showLandingScreen) {
+            LandingScreen(onTimeout = { showLandingScreen = false })
+        } else {
+            LoginApp(
+                viewModelContainer = viewModelContainer,
+                preferencesManager = preferencesManager,
+            )
+        }
+    }
+}
