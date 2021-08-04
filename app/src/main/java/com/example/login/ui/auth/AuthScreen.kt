@@ -36,7 +36,6 @@ fun AuthPreview() {
             onSubmit = { _, _ -> },
             toSignUp = {},
             onDone = {},
-            toHome = {}
         )
     }
 }

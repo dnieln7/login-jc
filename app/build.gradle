@@ -71,6 +71,9 @@ dependencies {
     implementation"androidx.compose.runtime:runtime:1.0.0"
     implementation"androidx.compose.runtime:runtime-livedata:1.0.0"
 
+    // Datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0-rc02"
+
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 }

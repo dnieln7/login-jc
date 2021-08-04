@@ -38,7 +38,6 @@ fun LoginCard(
     onSubmit: (username: String, password: String) -> Unit,
     onDone: () -> Unit,
     toSignUp: () -> Unit,
-    toHome: () -> Unit,
 ) {
     var username by rememberSaveable(key = "usernameState") { mutableStateOf("") }
     var password by rememberSaveable(key = "passwordState") { mutableStateOf("") }
@@ -112,7 +111,6 @@ fun LoginCard(
                     }
                 if (uiState == AuthState.Success) {
                     Toast.makeText(LocalContext.current, "Logged in", Toast.LENGTH_SHORT).show()
-                    toHome()
                     onDone()
                 }
             }
@@ -128,6 +126,5 @@ fun LoginPreview() {
         onSubmit = { _, _ -> },
         onDone = {},
         toSignUp = {},
-        toHome = {},
     )
 }

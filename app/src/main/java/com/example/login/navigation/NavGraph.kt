@@ -13,7 +13,6 @@ import com.example.login.ui.auth.AuthScreen
 import com.example.login.ui.auth.AuthState
 import com.example.login.ui.auth.LoginCard
 import com.example.login.ui.auth.SignUpCard
-import com.example.login.ui.home.HomeBody
 
 @Composable
 fun NavGraph(
@@ -42,8 +41,7 @@ fun NavGraph(
                         )
                     },
                     onDone = { container.loginViewModel.onLoginDone() },
-                    toSignUp = actions.navigateToSignUp,
-                    toHome = actions.navigateToHome,
+                    toSignUp = actions.navigateToSignUp
                 )
             }
         }
@@ -57,9 +55,6 @@ fun NavGraph(
                 )
             }
         }
-        composable(Destinations.Home.name) {
-            HomeBody()
-        }
     }
 }
 
@@ -69,8 +64,5 @@ class NavGraphActions(navHostController: NavHostController) {
     }
     val navigateToLogin: () -> Unit = {
         navHostController.navigate("${Destinations.Login}")
-    }
-    val navigateToHome: () -> Unit = {
-        navHostController.navigate("${Destinations.Home}")
     }
 }
