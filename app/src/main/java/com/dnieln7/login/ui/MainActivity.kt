@@ -4,20 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import com.dnieln7.login.data.preferences.PreferencesManager
-import com.dnieln7.login.navigation.Destinations
-import com.dnieln7.login.navigation.NavGraph
+import com.dnieln7.login.data.preferences.PreferencesUtils.createDataStore
 import com.dnieln7.login.ui.auth.LoginViewModel
 import com.dnieln7.login.ui.auth.SignUpViewModel
 import com.dnieln7.login.ui.theme.LoginTheme
-import com.dnieln7.login.data.preferences.PreferencesUtils.createDataStore
 
 class MainActivity : ComponentActivity() {
     private lateinit var loginViewModel: LoginViewModel

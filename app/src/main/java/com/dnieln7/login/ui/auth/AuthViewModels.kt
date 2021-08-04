@@ -1,7 +1,6 @@
 package com.dnieln7.login.ui.auth
 
 import androidx.lifecycle.*
-import com.dnieln7.login.data.preferences.PreferencesManager
 import com.dnieln7.login.domain.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

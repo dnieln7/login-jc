@@ -9,7 +9,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.dnieln7.login.ui.ViewModelContainer
-import com.dnieln7.login.ui.auth.*
+import com.dnieln7.login.ui.auth.AuthBody
+import com.dnieln7.login.ui.auth.AuthState
+import com.dnieln7.login.ui.auth.LoginCard
+import com.dnieln7.login.ui.auth.SignUpCard
 
 @Composable
 fun NavGraph(

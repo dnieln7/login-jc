@@ -1,7 +1,6 @@
 package com.dnieln7.login.data.preferences
 
 import android.content.Context
-import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.preferencesDataStore
 
 object PreferencesUtils {
