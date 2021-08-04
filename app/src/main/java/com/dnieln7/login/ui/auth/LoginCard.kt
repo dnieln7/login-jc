@@ -105,7 +105,6 @@ fun LoginCard(
                         )
                     }
                 if (uiState == AuthState.Success) {
-                    Toast.makeText(LocalContext.current, "Logged in", Toast.LENGTH_SHORT).show()
                     onDone()
                 }
             }
