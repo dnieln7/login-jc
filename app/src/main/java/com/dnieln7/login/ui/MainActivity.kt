@@ -8,26 +8,23 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModelProvider
-import com.dnieln7.login.data.preferences.PreferencesUtils.createDataStore
+import com.dnieln7.login.LoginApplication
 import com.dnieln7.login.ui.auth.LoginViewModel
 import com.dnieln7.login.ui.auth.SignUpViewModel
 import com.dnieln7.login.ui.theme.LoginTheme
 
 class MainActivity : ComponentActivity() {
     private lateinit var loginViewModel: LoginViewModel
-
-    private val preferencesManager by lazy {
-        com.dnieln7.login.data.preferences.PreferencesManager(createDataStore)
-    }
-
     private val signUpViewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val loginApplication = application as LoginApplication
+
         loginViewModel = ViewModelProvider(
             this,
-            LoginViewModel.LoginViewModelFactory(preferencesManager)
+            LoginViewModel.LoginViewModelFactory(loginApplication.serviceLocator.preferencesManager)
         ).get(LoginViewModel::class.java)
 
         val viewModelContainer = ViewModelContainer(
@@ -39,7 +36,7 @@ class MainActivity : ComponentActivity() {
             LoginTheme {
                 LoadApp(
                     viewModelContainer = viewModelContainer,
-                    preferencesManager = preferencesManager,
+                    preferencesManager = loginApplication.serviceLocator.preferencesManager,
                 )
             }
         }
