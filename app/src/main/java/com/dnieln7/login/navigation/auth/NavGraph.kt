@@ -1,4 +1,4 @@
-package com.dnieln7.login.navigation
+package com.dnieln7.login.navigation.auth
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

@@ -1,4 +1,4 @@
-package com.dnieln7.login.navigation
+package com.dnieln7.login.navigation.auth
 
 enum class Destinations {
     Login,

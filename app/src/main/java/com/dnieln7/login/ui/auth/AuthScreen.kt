@@ -12,8 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dnieln7.login.R
-import com.dnieln7.login.navigation.Destinations
-import com.dnieln7.login.navigation.NavGraph
+import com.dnieln7.login.navigation.auth.Destinations
+import com.dnieln7.login.navigation.auth.NavGraph
 import com.dnieln7.login.ui.ViewModelContainer
 
 @Composable
