@@ -2,8 +2,11 @@ package com.dnieln7.login.data.source.user
 
 import com.dnieln7.login.domain.Result
 import com.dnieln7.login.domain.User
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 
-class UserInMemoryDataSource : UserDataSource {
+@ViewModelScoped
+class UserInMemoryDataSource @Inject constructor() : UserDataSource {
     private val users: MutableList<User> = mutableListOf(
         User(
             name = "Daniel",

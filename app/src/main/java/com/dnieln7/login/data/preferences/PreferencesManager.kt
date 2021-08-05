@@ -9,13 +9,16 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PreferencesManager(private val dataStore: DataStore<Preferences>) {
+@Singleton
+class PreferencesManager @Inject constructor(private val dataStore: DataStore<Preferences>) {
     val user = dataStore.data.catch { catchError(it) }.map {
-        val name = it[com.dnieln7.login.data.preferences.PreferencesKeys.NAME] ?: ""
-        val lastName = it[com.dnieln7.login.data.preferences.PreferencesKeys.LAST_NAME] ?: ""
-        val username = it[com.dnieln7.login.data.preferences.PreferencesKeys.USERNAME] ?: ""
-        val email = it[com.dnieln7.login.data.preferences.PreferencesKeys.EMAIL] ?: ""
+        val name = it[PreferencesKeys.NAME] ?: ""
+        val lastName = it[PreferencesKeys.LAST_NAME] ?: ""
+        val username = it[PreferencesKeys.USERNAME] ?: ""
+        val email = it[PreferencesKeys.EMAIL] ?: ""
 
         if (name.isNotEmpty() && lastName.isNotEmpty() && username.isNotEmpty() && email.isNotEmpty()) {
             User(
@@ -32,19 +35,19 @@ class PreferencesManager(private val dataStore: DataStore<Preferences>) {
 
     suspend fun saveUser(user: User) {
         dataStore.edit {
-            it[com.dnieln7.login.data.preferences.PreferencesKeys.NAME] = user.name
-            it[com.dnieln7.login.data.preferences.PreferencesKeys.LAST_NAME] = user.lastName
-            it[com.dnieln7.login.data.preferences.PreferencesKeys.USERNAME] = user.username
-            it[com.dnieln7.login.data.preferences.PreferencesKeys.EMAIL] = user.email
+            it[PreferencesKeys.NAME] = user.name
+            it[PreferencesKeys.LAST_NAME] = user.lastName
+            it[PreferencesKeys.USERNAME] = user.username
+            it[PreferencesKeys.EMAIL] = user.email
         }
     }
 
     suspend fun deleteUser() {
         dataStore.edit {
-            it[com.dnieln7.login.data.preferences.PreferencesKeys.NAME] = ""
-            it[com.dnieln7.login.data.preferences.PreferencesKeys.LAST_NAME] = ""
-            it[com.dnieln7.login.data.preferences.PreferencesKeys.USERNAME] = ""
-            it[com.dnieln7.login.data.preferences.PreferencesKeys.EMAIL] = ""
+            it[PreferencesKeys.NAME] = ""
+            it[PreferencesKeys.LAST_NAME] = ""
+            it[PreferencesKeys.USERNAME] = ""
+            it[PreferencesKeys.EMAIL] = ""
         }
     }
 

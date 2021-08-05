@@ -3,17 +3,21 @@ package com.dnieln7.login.ui.auth
 import androidx.lifecycle.*
 import com.dnieln7.login.data.preferences.PreferencesManager
 import com.dnieln7.login.data.source.user.UserDataSource
+import com.dnieln7.login.di.InMemoryDataSource
 import com.dnieln7.login.domain.Result
 import com.dnieln7.login.domain.User
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
-class LoginViewModel(
+@HiltViewModel
+class LoginViewModel @Inject constructor(
     private val preferencesManager: PreferencesManager,
-    private val userDataSource: UserDataSource
+    @InMemoryDataSource private val userDataSource: UserDataSource
 ) : ViewModel() {
     private val _uiState = MutableLiveData<AuthState>()
 
@@ -44,25 +48,11 @@ class LoginViewModel(
     fun onLoginDone() {
         _uiState.value = AuthState.Nothing
     }
-
-    class Factory(
-        private val preferencesManager: PreferencesManager,
-        private val userDataSource: UserDataSource
-    ) :
-        ViewModelProvider.Factory {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-                return LoginViewModel(preferencesManager, userDataSource) as T
-            }
-
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
-    }
 }
 
-class SignUpViewModel(private val userDataSource: UserDataSource) : ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(@InMemoryDataSource private val userDataSource: UserDataSource) :
+    ViewModel() {
     private val _uiState = MutableLiveData<AuthState>()
 
     val uiState: LiveData<AuthState> = _uiState
@@ -92,18 +82,5 @@ class SignUpViewModel(private val userDataSource: UserDataSource) : ViewModel() 
 
     fun onSignUpDone() {
         _uiState.value = AuthState.Nothing
-    }
-
-    class Factory(private val userDataSource: UserDataSource) :
-        ViewModelProvider.Factory {
-
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SignUpViewModel::class.java)) {
-                return SignUpViewModel(userDataSource) as T
-            }
-
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
     }
 }

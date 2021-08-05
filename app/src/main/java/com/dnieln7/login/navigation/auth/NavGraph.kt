@@ -5,24 +5,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.dnieln7.login.ui.ViewModelContainer
-import com.dnieln7.login.ui.auth.AuthBody
-import com.dnieln7.login.ui.auth.AuthState
-import com.dnieln7.login.ui.auth.LoginCard
-import com.dnieln7.login.ui.auth.SignUpCard
+import com.dnieln7.login.ui.auth.*
 
 @Composable
 fun NavGraph(
     modifier: Modifier,
     navHostController: NavHostController,
-    container: ViewModelContainer
+    loginViewModel: LoginViewModel = viewModel(),
+    signUpViewModel: SignUpViewModel = viewModel(),
 ) {
     val actions = remember(navHostController) { NavGraphActions(navHostController) }
-    val loginState: AuthState by container.loginViewModel.uiState.observeAsState(AuthState.Nothing)
-    val signUpState: AuthState by container.signUpViewModel.uiState.observeAsState(AuthState.Nothing)
+    val loginState: AuthState by loginViewModel.uiState.observeAsState(AuthState.Nothing)
+    val signUpState: AuthState by signUpViewModel.uiState.observeAsState(AuthState.Nothing)
 
     NavHost(
         navController = navHostController,
@@ -35,12 +33,12 @@ fun NavGraph(
                 LoginCard(
                     uiState = loginState,
                     onSubmit = { username, password ->
-                        container.loginViewModel.login(
+                        loginViewModel.login(
                             username,
                             password
                         )
                     },
-                    onDone = { container.loginViewModel.onLoginDone() },
+                    onDone = { loginViewModel.onLoginDone() },
                     toSignUp = actions.navigateToSignUp
                 )
             }
@@ -49,8 +47,8 @@ fun NavGraph(
             AuthBody(route = Destinations.SignUp) {
                 SignUpCard(
                     uiState = signUpState,
-                    onSubmit = { container.signUpViewModel.signup(it) },
-                    onDone = { container.signUpViewModel.onSignUpDone() },
+                    onSubmit = { signUpViewModel.signup(it) },
+                    onDone = { signUpViewModel.onSignUpDone() },
                     toLogin = actions.navigateToLogin,
                 )
             }

@@ -9,15 +9,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dnieln7.login.R
 import com.dnieln7.login.navigation.auth.Destinations
 import com.dnieln7.login.navigation.auth.NavGraph
-import com.dnieln7.login.ui.ViewModelContainer
 
 @Composable
-fun AuthScreen(viewModelContainer: ViewModelContainer) {
+fun AuthScreen(
+    loginViewModel: LoginViewModel = viewModel(),
+    signUpViewModel: SignUpViewModel = viewModel(),
+) {
     val navController = rememberNavController()
     val backstackEntry = navController.currentBackStackEntryAsState()
     val currentScreen = Destinations.getRouteName(backstackEntry.value?.destination?.route)
@@ -26,7 +29,8 @@ fun AuthScreen(viewModelContainer: ViewModelContainer) {
         NavGraph(
             modifier = Modifier.padding(it),
             navHostController = navController,
-            container = viewModelContainer,
+            loginViewModel = loginViewModel,
+            signUpViewModel = signUpViewModel
         )
     }
 }
