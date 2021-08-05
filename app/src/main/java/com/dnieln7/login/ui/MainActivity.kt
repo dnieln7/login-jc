@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModelProvider
 import com.dnieln7.login.LoginApplication
 import com.dnieln7.login.data.preferences.PreferencesManager
@@ -56,7 +57,7 @@ data class ViewModelContainer(
 @Composable
 fun LoadApp(viewModelContainer: ViewModelContainer, preferencesManager: PreferencesManager) {
     Surface(color = MaterialTheme.colors.primary) {
-        var showLandingScreen by remember { mutableStateOf(true) }
+        var showLandingScreen by rememberSaveable { mutableStateOf(true) }
 
         if (showLandingScreen) {
             LandingScreen(onTimeout = { showLandingScreen = false })
