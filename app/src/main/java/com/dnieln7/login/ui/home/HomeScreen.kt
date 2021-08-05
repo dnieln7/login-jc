@@ -13,13 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.dnieln7.login.R
+import com.dnieln7.login.data.preferences.PreferencesManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun HomeScreen(preferencesManager: com.dnieln7.login.data.preferences.PreferencesManager) {
+fun HomeScreen(preferencesManager: PreferencesManager) {
     val scope = rememberCoroutineScope()
 
     val uiState by produceState(initialValue = DetailsState(isLoading = true)) {
@@ -66,10 +67,4 @@ fun HomeTopBar(signOut: () -> Unit) {
             }
         },
     )
-}
-
-@Preview
-@Composable
-fun PreviewHomeBody() {
-
 }
